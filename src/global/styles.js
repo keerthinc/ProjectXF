@@ -9,6 +9,7 @@ export const colors={
     Cardbackgroun:"#ffffff",
     StatusBar:"#ff8c52",
     headerText:"#ffffff",
+    lightgreen:"#66CF45",
 };
 
 export const parameters={
