@@ -3,8 +3,9 @@ import React from "react";
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {colors, parameters} from '../global/styles';
 import { Icon } from "react-native-elements";
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function Header({title, type}){
+const Header=({title, type, navigation})=>{
     return(
         <View style={styles.header}>
            <View styles={{marginLeft:20}}>
@@ -13,7 +14,7 @@ export default function Header({title, type}){
                   name={type}
                   color={colors.headerText}
                   size={25}
-                  onPress={()=>{}}
+                  onPress={()=>{navigation.goBack()}}
                />
             </View>
             <View>
@@ -37,3 +38,5 @@ const styles=StyleSheet.create({
     }
     ,
 })
+
+export default Header;

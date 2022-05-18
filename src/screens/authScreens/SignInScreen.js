@@ -10,7 +10,7 @@ import * as Animatable from 'react-native-animatable';
 
 
 
-export function SignInScreen(){
+const SignInScreen=({navigation})=>{
    const[textInput2Focused, settextInput2Focused]=useState(false)
    const textInput1=useRef(1)
    const textInput2=useRef(2)
@@ -19,7 +19,7 @@ export function SignInScreen(){
 
     return(
         <View style={styles.container}>
-             <Header title="MY ACCOUNT" type="arrow-left"/>
+             <Header title="MY ACCOUNT" type="arrow-left" navigation={navigation}/>
              
              <View style={{marginLeft:20, marginTop:10}}>
              <Text style={title}> Sign In</Text>
@@ -179,3 +179,6 @@ const styles = StyleSheet.create({
         marginTop:1
     },
 })
+
+
+export default SignInScreen;

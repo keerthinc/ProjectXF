@@ -1,19 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet, StatusBar } from "react-native";
 
-import { colors } from "./src/global/styles";
-import {SignInScreen} from "./src/screens/authScreens/SignInScreen";
-import SignInWelcomeScreen, {SignInWelcomScreen} from "./src/screens/authScreens/SignInWelcomeScreen";
+import {colors} from "./src/global/styles";
+import RootNavigator from './src/navigation/rootNavigator';
 
-export default function App(){
+const App=()=>{
   return(
     <View style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={colors.StatusBar}
       />
-      {/* <SignInScreen/> */}
-        <SignInWelcomeScreen/>
+      <RootNavigator/>
     </View>
   )
 }
@@ -21,3 +19,5 @@ export default function App(){
 const styles=StyleSheet.create({
   container:{flex:1,}
 })
+
+export default App;

@@ -7,9 +7,10 @@ import { Icon, Button, SocialIcon} from "react-native-elements";
 import * as Animatable from 'react-native-animatable';
 import Swiper from "react-native-swiper";
 import { color } from "react-native-elements/dist/helpers";
+import { NavigationContainer } from "@react-navigation/native";
 
 
-export default function SignInWelcomeScreen(){
+const SignInWelcomeScreen=({navigation})=>{
      return(
          <View style={{flex:1}}>
              <View style={{flex:3, justifyContent:"flex-start", alignItems:"center", padding:20}}>
@@ -50,6 +51,9 @@ export default function SignInWelcomeScreen(){
                     title="SIGN IN"
                     buttonStyle={parameters.styleButton}
                     titleStyle={parameters.buttonTitle}
+                    onPress={()=>{
+                        navigation.navigate("SignInScreen")
+                    }}
                     />
                     </View>
              </View>
@@ -109,3 +113,6 @@ const styles=StyleSheet.create({
     },
 
     })
+
+
+    export default SignInWelcomeScreen;
