@@ -9,6 +9,7 @@ import * as Animatable from 'react-native-animatable';
 
 
 
+
 export function SignInScreen(){
    const[textInput2Focused, settextInput2Focused]=useState(false)
    const textInput1=useRef(1)

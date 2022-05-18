@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, StatusBar } from "react-native";
 
 import { colors } from "./src/global/styles";
 import {SignInScreen} from "./src/screens/authScreens/SignInScreen";
+import SignInWelcomeScreen, {SignInWelcomScreen} from "./src/screens/authScreens/SignInWelcomeScreen";
 
 export default function App(){
   return(
@@ -11,7 +12,8 @@ export default function App(){
         barStyle="light-content"
         backgroundColor={colors.StatusBar}
       />
-      <SignInScreen/>
+      {/* <SignInScreen/> */}
+        <SignInWelcomeScreen/>
     </View>
   )
 }
