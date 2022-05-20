@@ -42,7 +42,7 @@ const SignInScreen=({navigation})=>{
                  <View style={styles.textInput2}>
                             <Animatable.View animation={textInput2Focused?"":"fadeInLeft"} duration={100}>
                                <Icon name="lock" 
-                               iconStyle={{color:colors.grey}} 
+                               iconStyle={{color:colors.grey1}} 
                                type="material" 
                                />
                             </Animatable.View>
@@ -74,7 +74,7 @@ const SignInScreen=({navigation})=>{
             title="SIGN IN"
             buttonStyle={parameters.styleButton}
             titleStyle={parameters.buttonTitle}
-            onPress={()=>(navigation.navigate("HomeScreen"))}
+            onPress={()=>(navigation.navigate("RootClientTabs"))}
             />
         </View>
 
