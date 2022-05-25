@@ -1,185 +1,240 @@
-import React, {useState, useRef} from "react";
-
-import {View, Text, StyleSheet, Dimensions, TextInput} from 'react-native';
-import {colors, parameters, title} from '../../global/styles';
-import Header from '../../components/Header';
-import { Icon, Button, SocialIcon} from "react-native-elements";
-import * as Animatable from 'react-native-animatable';
-
-
-
-
+import React,{useState,useRef,useContext} from 'react';
+import {View, Text, StyleSheet, Dimensions,TextInput, Alert} from 'react-native'
+import {colors, parameters,title} from "../../global/styles"
+import * as Animatable from 'react-native-animatable'
+import {Icon, Button,SocialIcon} from 'react-native-elements'
+import { Formik } from 'formik';
+import {Header} from '../../components/Header'
+import {auth} from '@react-native-firebase/auth'
+// import { SignInContext } from '../../contexts/authContext';
 
 const SignInScreen=({navigation})=>{
-   const[textInput2Focused, settextInput2Focused]=useState(false)
-   const textInput1=useRef(1)
-   const textInput2=useRef(2)
+
+    const {dispatchSignedIn} = useContext(SignInContext)
+
+    const[textInput2Fossued, setTextInput2Fossued] =useState(false)
+    const textInpput1 = useRef(1)
+    const textInput2 = useRef(2)
+
+
+async function signIn(data){
+    try{
+    const {password,email} = data
+    const user = await auth().signInWithEmailAndPassword(email,password)
+    if(user){
+        dispatchSignedIn({type:"UPDATE_SIGN_IN",payload:{userToken:"signed-in"}})
+    }
+}
+    catch(error){
+        Alert.alert(
+            error.name,
+            error.message
+        )
+    }
+
+}
+
+
 
 
 
     return(
-        <View style={styles.container}>
-             <Header title="MY ACCOUNT" type="arrow-left" navigation={navigation}/>
-             
-             <View style={{marginLeft:20, marginTop:10}}>
-             <Text style={title}> Sign In</Text>
-             </View>
-            
-             <View style={{alignItems:"center", marginTop:10}}>
-                 <Text style={styles.text1}>Please enter the email and password</Text>
-                 <Text style={styles.text1}>Register with your account</Text>
-             </View>
+        <View style ={styles.container}>
 
-             <View>
-                 <View style={{marginTop:20}}>
-                     <TextInput
-                     style={styles.textInput1}
-                     placeholder="Email"
-                     ref={textInput2}
-                     />
-                 </View>
+           
+             <Header title ="MY ACCOUNT"  type ="arrow-left" navigation ={navigation}/>  
 
-                 <View style={styles.textInput2}>
-                            <Animatable.View animation={textInput2Focused?"":"fadeInLeft"} duration={100}>
-                               <Icon name="lock" 
-                               iconStyle={{color:colors.grey1}} 
-                               type="material" 
-                               />
-                            </Animatable.View>
-                            <TextInput
-                                style={{width:"80%"}}
-                                placeholder="Password"
-                                ref={textInput2}
-                                onFocused={()=>{
-                                    settextInput2Focused(false)
-                                }}
-                                onBlur={()=>{
-                                    settextInput2Focused(true)
-                                }}
-                                />
-                            <Animatable.View animation={textInput2Focused?"":"fadeInLeft"} duration={100}>
-                                    <Icon name="visibility-off" 
-                                    iconStyle={{color:colors.grey}} 
-                                    type="material" 
-                                    style={{marginRight:10}}
-                                    />
-                                    
-                            </Animatable.View>
-                 </View>
-                
-             </View>
+             <View style ={{marginLeft:20, marginTop:10}}>
+                 <Text style ={title}>Sign-In</Text>
+             </View> 
 
-        <View style={{marginHorizontal:20, marginVertical:20}}>
-            <Button
-            title="SIGN IN"
-            buttonStyle={parameters.styleButton}
-            titleStyle={parameters.buttonTitle}
-            onPress={()=>(navigation.navigate("RootClientTabs"))}
-            />
+            <View style ={{alignItems:"center",marginTop:10}}>
+                <Text style= {styles.text1} >Please enter the email and password</Text>
+                <Text style= {styles.text1} >registered with your account</Text> 
+            </View>
+
+
+            <Formik 
+                initialValues = {{email:'',password:''}}
+                onSubmit = {(values)=>{
+                           signIn(values)
+   
+                        }}
+                    >
+                    { (props)=>(
+                <View>
+                <View style ={{marginTop:20}}>
+                <View>
+                    <TextInput 
+                      style ={styles.TextInput1}
+                      placeholder ="Email"
+                      ref ={textInpput1}
+                      onChangeText = {props.handleChange('email')}
+                      value ={props.values.email}
+                    />
+                </View>
+
+
+
+                <View style ={styles.TextInput2}>
+                <Animatable.View animation ={textInput2Fossued?"":"fadeInLeft"} duration={400} >
+                    <Icon 
+                        name ="lock"
+                        iconStyle ={{color:colors.grey3}}
+                        type ="material"
+                        style={{}}
+                      
+                        
+                    />
+                </Animatable.View>
+
+                     <TextInput 
+                      style= {{flex:1}}
+                      placeholder ="Password"
+                      ref ={textInput2}
+                      onFocus ={()=>{
+                          setTextInput2Fossued(false)
+                      }}
+
+                      onBlur ={()=>{
+                          setTextInput2Fossued(true)
+                      }}
+                      onChangeText = {props.handleChange('password')}
+                      value = {props.values.password}
+                    />
+
+                <Animatable.View animation ={textInput2Fossued?"":"fadeInLeft"} duration={400} >
+                     
+                        <Icon 
+                                name ="visibility-off"
+                                iconStyle ={{color:colors.grey3}}
+                                type ="material"
+                                style={{marginRight:10}}
+                                
+                            />
+
+                </Animatable.View>
+                </View>
+
+            </View>
+
+            <View style ={{marginHorizontal:20, marginTop:30}}>
+                <Button 
+                    title ="SIGN IN"
+                    buttonStyle = {parameters.styledButton}
+                    titleStyle = {parameters.buttonTitle}
+                        onPress ={props.handleSubmit}
+                   />
+            </View>  
+            </View>
+                    )}
+        </Formik>
+
+
+           
+
+            <View style ={{alignItems:"center",marginTop:15}}>
+                <Text style ={{...styles.text1, textDecorationLine:"underline"}}> Forgot Password ?</Text>
+            </View> 
+
+            <View style ={{alignItems:"center",marginTop:30, marginBottom:30}}>
+                <Text style ={{fontSize:20, fontWeight:"bold"}}>OR</Text>
+            </View>    
+
+            <View style ={{marginHorizontal:10,marginTop:10}}>
+                <SocialIcon 
+                        title ="Sign In With Facebook"
+                        button
+                        type ="facebook"
+                        style ={styles.SocialIcon}
+                        onPress ={()=>{}}
+                    />
+            </View>     
+
+            <View style ={{marginHorizontal:10,marginTop:10}}>
+                <SocialIcon 
+                        title ="Sign In With Google"
+                        button
+                        type ="google"
+                        style ={styles.SocialIcon}
+                        onPress ={()=>{}}
+                    />
+            </View> 
+
+            <View style ={{marginTop:25,marginLeft:20}}>
+                <Text style ={{...styles.text1,}}>New on XpressFood ?</Text>
+            </View>           
+
+
+            <View style ={{alignItems:"flex-end",marginHorizontal:20}}>
+                <Button 
+                    title ="Create an account"
+                    buttonStyle ={styles.createButton}
+                    titleStyle ={styles.createButtonTitle}
+                    onPress ={()=>{navigation.navigate("SignUpScreen")}}
+                />
+            </View>
+
         </View>
-
-        <View style={{alignItems:"center", marginTop:15}}>
-            <Text style={{...styles.text1, textDecorationLine:"underline"}}>Forgot password</Text>
-        </View>
-
-         <View style={{alignItems:"center", marginTop:20, marginHorizontal:20}}>
-             <Text style={{fontSize:20, fontWeight:"bold"}}>OR</Text>
-         </View>
-
-         <View style={{marginHorizontal:10, marginTop:10}}>
-             <SocialIcon
-               title="Sign in with Facebook"
-               button
-               type="facebook"
-               style={styles.socialIcon}
-               onPress={()=>{}}
-             />
-         </View>
-
-         <View style={{marginHorizontal:10, marginTop:10}}>
-             <SocialIcon
-               title="Sign in with Google"
-               button
-               type="google"
-               style={styles.socialIcon}
-               onPress={()=>{}}
-             />
-         </View>
-
-         <View style={{marginTop:25, marginLeft:20}}>
-             <Text style={{...styles.text, }}>New on XpressFood ?</Text>
-         </View>
-
-         <View style={{alignItems:"flex-end", marginVertical:20 ,marginHorizontal:20}}>
-             <Button
-             title="create an account"
-             buttonStyle={styles.createButton}
-             titleStyle={styles.createButtonTitle}
-             />
-         </View>
-    </View>
-       
     )
 }
 
-
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-    },
-    text:{
-        color:colors.grey1,
-        fontSize:16,
-        fontWeight:"500",
+    container :{
+        flex:1
     },
 
     text1:{
         color:colors.grey3,
-        fontSize:16,
-        fontWeight:"500",
+        fontSize:16
     },
-    textInput1:{
+
+    TextInput1:{
         borderWidth:1,
-        borderColor:"#bdc6cf",
+        borderColor:"#86939e",
         marginHorizontal:20,
         borderRadius:12,
         marginBottom:20,
         paddingLeft:15
-    },
-    textInput2:{
-        borderWidth:1,
-        borderRadius:12,
-        marginHorizontal:20,
-        borderColor:"#bdc6cf",
-        flexDirection:"row",
-        justifyContent:"space-between",
-        alignContent:"center",
-        alignItems:"center",
-        paddingLeft:15
-    },
-    socialIcon:{
-        borderRadius:12,
-        height:50
-    },
-    createButton:{
-        backgroundColor:"#ffffff",
-        alignContent:"center",
-        justifyContent:"center",
-        borderRadius:15,
-        borderWidth:1,
-        borderColor:"#ff8c52",
-        height:50,
-        paddingHorizontal:15
-    },
-    createButtonTitle:{
-        color:"#ff8c52",
-        fontSize:16,
-        fontWeight:"bold",
-        alignItems:"center",
-        justifyContent:"center",
-        marginTop:1
-    },
-})
+      },
 
+      TextInput2:{
+        borderWidth:1,
+         borderRadius:12,
+         marginHorizontal:20,
+         borderColor:"#86939e",
+         flexDirection:"row",
+         justifyContent:"space-between",
+         alignContent:"center",
+         alignItems:"center",
+         paddingLeft:15
+  
+      },
+
+      SocialIcon :{
+        borderRadius :12,
+        height:50
+      },
+
+      createButton:{
+        backgroundColor:"white",
+        alignContent:"center",
+        justifyContent:"center",
+        borderRadius:12,
+        borderWidth:1, 
+        borderColor:"#ff8c52",
+        height:40,
+        paddingHorizontal:20,
+      },
+
+      createButtonTitle:{
+        color:"#ff8c52",
+        fontSize:16,  
+        fontWeight:"bold" ,
+        alignItems:"center",
+        justifyContent:"center"  ,
+        marginTop:-3
+      }
+})
 
 export default SignInScreen;

@@ -3,17 +3,21 @@ import React, {useState} from "react";
 import {FlatList, View, Text, StyleSheet,
      TouchableOpacity, ScrollView, Pressable, Image, Dimensions} from 'react-native';
 import {Icon} from 'react-native-elements';
-import HomeHeader from "../components/HomeHeader";
+import {HomeHeader} from "../components/HomeHeader";
 import {colors, parameters} from '../global/styles';
 import{filterData, restaurantData} from "../global/Data";
-import FoodCard from "../components/FoodCard";
-import CountDown from "react-native-countdown-component";
+import {FoodCard}from "../components/FoodCard";
+import {CountDown} from "react-native-countdown-component";
 
 const SCREEN_WIDTH = Dimensions.get("window").width
 
-const HomeScreen=()=>{
+const HomeScreen=({navigation})=>{
+
     const[delivery, setDelivery] = useState(true)
     const[indexCheck, setIndexCheck] =useState("0")
+
+
+
     return(
         <View style={styles.container}>
            <HomeHeader/>
@@ -36,6 +40,7 @@ const HomeScreen=()=>{
                                 <TouchableOpacity
                                 onPress={()=>{
                                     setDelivery(false)
+                                    navigation.navigate("RestaurantMapScreen")
                                 }}
                                 >
                                     <View style={{...styles.deliveryButton,backgroundColor:delivery?colors.grey5:colors.buttons}}>
@@ -191,6 +196,24 @@ const HomeScreen=()=>{
                      }
                  </View>
            </ScrollView>
+           {delivery &&
+           <View style={styles.floatButton}>
+               <TouchableOpacity
+                  onPress={()=>{
+                      navigation.navigate("RestaurantMapScreen")
+                  }}
+               >
+                  <Icon
+                  name="place"
+                  type="material"
+                  size={32}
+                  color={colors.buttons}
+                  />
+
+                  <Text style={{color:colors.grey2}}>Map</Text>
+               </TouchableOpacity>
+           </View>
+            }
         </View>
     )
 }
@@ -269,6 +292,16 @@ smallCardTextSelected:{
 smallCardTextNotSelected:{
     fontWeight:"bold",
     color:colors.grey2,
+},
+floatButton:{
+    position:"absolute",
+    bottom:10, 
+    right:15,
+    backgroundColor:"white",
+    elevation:10,
+    width:60, height:60,
+    borderRadius:30,
+    alignItems:"center",
 }
 })
 

@@ -3,10 +3,10 @@ import React from "react";
 import{colors} from "../global/styles";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import{Icon} from 'react-native-elements';
-import HomeScreen from "../screens/HomeScreen";
-import SearchScreen from "../screens/SearchScreen";
-import MyOrdersScreen from '../screens/MyOrdersScreen';
-import MyAccountScreen from "../screens/MyAccountScreen";
+import {HomeScreen} from "../screens/HomeScreen";
+import {SearchScreen} from "../screens/SearchScreen";
+import {MyOrdersScreen} from '../screens/MyOrdersScreen';
+import {MyAccountScreen} from "../screens/MyAccountScreen";
 
 const ClientTabs= createBottomTabNavigator();
 
@@ -88,6 +88,7 @@ const RootClientTabs=()=>{
                 }
             }
           />
+          
       </ClientTabs.Navigator>
   )
 }

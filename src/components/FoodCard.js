@@ -6,7 +6,7 @@ import{Icon} from "react-native-elements";
 import { color } from "react-native-elements/dist/helpers";
 import{colors, parameters} from "../global/styles";
 
-export default function FoodCard({
+const FoodCard=({
     onPressFoodCard,
     restaurantName,
     deliveryAvailable,
@@ -18,7 +18,7 @@ export default function FoodCard({
     averageReview,
     images,
     screenWidth
-}){
+})=>{
     return(
         <TouchableOpacity>
             <View style={{...styles.cardView, width:screenWidth}}>
@@ -125,3 +125,5 @@ const styles=StyleSheet.create({
         marginLeft:0
     }
 })
+
+export default FoodCard;

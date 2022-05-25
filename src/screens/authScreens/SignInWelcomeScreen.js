@@ -2,10 +2,10 @@ import React, {useState, useRef} from "react";
 
 import {View, Text, StyleSheet, Dimensions, TextInput, Image} from 'react-native';
 import {colors, parameters, title} from '../../global/styles';
-import Header from '../../components/Header';
+import {Header} from '../../components/Header';
 import { Icon, Button, SocialIcon} from "react-native-elements";
 import * as Animatable from 'react-native-animatable';
-import Swiper from "react-native-swiper";
+import {Swiper} from "react-native-swiper";
 import { color } from "react-native-elements/dist/helpers";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -62,6 +62,7 @@ const SignInWelcomeScreen=({navigation})=>{
                     title="create an account"
                     buttonStyle={styles.createButton}
                     titleStyle={styles.createButtonTitle}
+                    onPress={()=>{navigation.navigate("SignUpScreen")}}
                     />
              </View>
          </View>
